@@ -1,0 +1,59 @@
+### Étape 1 : Environnement et Structure
+
+* Mise en place du **Makefile** (compilation silencieuse, clean, fclean, re).
+* Création du fichier `so_long.h` avec les structures (`t_data`, `t_map`, `t_img`).
+* Intégration de la **Libft** et de **get_next_line**.
+
+### Étape 2 : Parsing et Validation de la Carte
+
+* Vérification de l'extension du fichier (`.ber`).
+* Lecture du fichier et stockage dans un `char **`.
+* Vérification de la forme (rectangle).
+* Vérification des murs (pourtour complet de '1').
+* Comptage des entités (1 'P', 1 'E', min 1 'C').
+* Vérification des caractères interdits.
+
+### Étape 3 : Algorithme de Chemin Valide (Flood Fill)
+
+* Création d'une copie temporaire de la carte.
+* Implémentation de l'algorithme récursif de remplissage à partir de 'P'.
+* Vérification que tous les 'C' et le 'E' ont été atteints.
+* Libération de la copie et gestion des erreurs.
+
+### Étape 4 : Initialisation Graphique
+
+* Initialisation de la MLX (`mlx_init`).
+* Calcul de la taille de la fenêtre en fonction de la carte.
+* Ouverture de la fenêtre (`mlx_new_window`).
+* Chargement des fichiers `.xpm` en images (`mlx_xpm_file_to_image`).
+
+### Étape 5 : Rendu de la Carte (Rendering)
+
+* Parcours du tableau 2D.
+* Affichage des tuiles au sol ('0') sur toute la surface.
+* Superposition des murs, items, sortie et joueur via `mlx_put_image_to_window`.
+
+### Étape 6 : Gestion des Événements (Hooks)
+
+* Hook de fermeture (croix rouge et touche ESC).
+* Hook de clavier (W, A, S, D ou flèches).
+* Logique de déplacement :
+* Calcul de la nouvelle position.
+* Gestion des collisions avec les murs ('1').
+* Ramassage des objets ('C').
+* Compteur de mouvements dans le terminal.
+
+
+
+### Étape 7 : Conditions de Victoire et Fin
+
+* Vérification de la condition de sortie (tous les 'C' ramassés).
+* Action de fin de jeu lors de l'entrée sur 'E'.
+* Nettoyage complet de la mémoire (MLX et allocations système).
+
+---
+
+### Étape 8 : Tests et Debugging
+
+* Test avec des cartes invalides (vides, ouvertes, sans sortie, etc.).
+* Passage de **Valgrind** pour vérifier l'absence de fuites mémoire.
