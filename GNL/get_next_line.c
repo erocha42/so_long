@@ -3,23 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: erocha-- <erocha--@student.42.fr>          +#+  +:+       +#+        */
+/*   By: enzorolinux <enzorolinux@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/07 11:41:54 by erocha--          #+#    #+#             */
-/*   Updated: 2026/01/06 19:11:00 by erocha--         ###   ########.fr       */
+/*   Updated: 2026/01/14 16:53:17 by enzorolinux      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-static void	clean_stash(t_list **stash)
+static void	clean_stash(t_gnl_list **stash)
 {
-	t_list	*last;
-	t_list	*cleaned;
+	t_gnl_list	*last;
+	t_gnl_list	*cleaned;
 	int		i;
 	int		j;
 
-	cleaned = malloc(sizeof(t_list));
+	cleaned = malloc(sizeof(t_gnl_list));
 	if (cleaned == NULL)
 		return ;
 	cleaned->next = NULL;
@@ -41,7 +41,7 @@ static void	clean_stash(t_list **stash)
 	*stash = cleaned;
 }
 
-static void	extract_line(t_list *stash, char **line)
+static void	extract_line(t_gnl_list *stash, char **line)
 {
 	int	i;
 	int	j;
@@ -69,13 +69,13 @@ static void	extract_line(t_list *stash, char **line)
 	(*line)[j] = '\0';
 }
 
-static void	put_to_stash(t_list **stash, char *buf, int readed_value)
+static void	put_to_stash(t_gnl_list **stash, char *buf, int readed_value)
 {
-	t_list	*new_node;
-	t_list	*last;
+	t_gnl_list	*new_node;
+	t_gnl_list	*last;
 	int		i;
 
-	new_node = malloc(sizeof(t_list));
+	new_node = malloc(sizeof(t_gnl_list));
 	if (new_node == NULL)
 		return ;
 	new_node->next = NULL;
@@ -98,7 +98,7 @@ static void	put_to_stash(t_list **stash, char *buf, int readed_value)
 	last->next = new_node;
 }
 
-static int	read_stash(int fd, t_list **stash)
+static int	read_stash(int fd, t_gnl_list **stash)
 {
 	char	*buf;
 	int		readed_value;
@@ -128,7 +128,7 @@ static int	read_stash(int fd, t_list **stash)
 
 char	*get_next_line(int fd)
 {
-	static t_list	*stash;
+	static t_gnl_list	*stash;
 	char			*line;
 
 	if (BUFFER_SIZE <= 0 || fd < 0)

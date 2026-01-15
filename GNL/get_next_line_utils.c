@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: erocha-- <erocha--@student.42.fr>          +#+  +:+       +#+        */
+/*   By: enzorolinux <enzorolinux@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/07 17:06:32 by erocha--          #+#    #+#             */
-/*   Updated: 2026/01/06 19:10:48 by erocha--         ###   ########.fr       */
+/*   Updated: 2026/01/14 19:14:08 by enzorolinux      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-int	new_line(t_list *stash)
+int	new_line(t_gnl_list *stash)
 {
-	t_list	*last;
+	t_gnl_list	*last;
 	int		i;
 
 	i = 0;
@@ -30,9 +30,9 @@ int	new_line(t_list *stash)
 	return (0);
 }
 
-t_list	*get_last(t_list *lst)
+t_gnl_list	*get_last(t_gnl_list *lst)
 {
-	t_list	*current;
+	t_gnl_list	*current;
 
 	current = lst;
 	while (current && current->next)
@@ -40,7 +40,7 @@ t_list	*get_last(t_list *lst)
 	return (current);
 }
 
-void	create_line(char **line, t_list *stash)
+void	create_line(char **line, t_gnl_list *stash)
 {
 	int	i;
 	int	len;
@@ -76,10 +76,10 @@ int	ftt_strlen(const char *str)
 	return (len);
 }
 
-void	free_stash(t_list *stash)
+void	free_stash(t_gnl_list *stash)
 {
-	t_list	*current;
-	t_list	*next;
+	t_gnl_list	*current;
+	t_gnl_list	*next;
 
 	current = stash;
 	while (current)

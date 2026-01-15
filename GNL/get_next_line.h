@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: erocha-- <erocha--@student.42.fr>          +#+  +:+       +#+        */
+/*   By: enzorolinux <enzorolinux@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/05 17:47:43 by erocha--          #+#    #+#             */
-/*   Updated: 2026/01/06 19:10:38 by erocha--         ###   ########.fr       */
+/*   Updated: 2026/01/14 21:24:21 by enzorolinux      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,17 +20,17 @@
 #  define BUFFER_SIZE 42
 # endif
 
-typedef struct s_list
+typedef struct s_gnl_list
 {
 	char			*content;
-	struct s_list	*next;
-}					t_list;
+	struct s_gnl_list	*next;
+}					t_gnl_list;
 
 char		*get_next_line(int fd);
-t_list		*get_last(t_list *lst);
-int			new_line(t_list *stash);
-void		create_line(char **line, t_list *stash);
+t_gnl_list		*get_last(t_gnl_list *lst);
+int			new_line(t_gnl_list *stash);
+void		create_line(char **line, t_gnl_list *stash);
 int			ftt_strlen(const char *str);
-void		free_stash(t_list *stash);
+void		free_stash(t_gnl_list *stash);
 
 #endif

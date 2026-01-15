@@ -3,75 +3,132 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: erocha-- <erocha--@student.42.fr>          +#+  +:+       +#+        */
+/*   By: enzorolinux <enzorolinux@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/13 15:43:53 by erocha--          #+#    #+#             */
-/*   Updated: 2026/01/13 19:07:02 by erocha--         ###   ########.fr       */
+/*   Updated: 2026/01/15 20:13:32 by enzorolinux      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-static int	char_check(char c, t_map *map)
+static void sanitize_grid(char **grid)
 {
-	int	i;
+    int i;
+	int j;
 
 	i = 0;
-	if (c == 'e')
-		(*map).e_count++;
-	else if (c == 'p')
-		(*map).p_count++;
-	else if (c == 'c')
-		(*map).c_count++;
-	if ((*map).c_count < 1 || (*map).p_count != 1 || (*map).e_count != 1)
-		return (0);
-	i++;
-	return (1);
-}
-
-static int	set_map_size(int file, t_map *map)
-{
-	char	*line;
-	int		i;
-	int		j;
-	
-	line = get_next_line(file);
-	(*map).width = ft_strlen(line);
-	i = 0;
-	j = 0;
-	while (line[0] != '\0')
-	{
+    while (grid[i])
+    {
 		j = 0;
-		while (line[j])
-		{
-			if (!char_check(line[j], map))
-				return (0);
+        while (grid[i][j])
+        {
+			if (grid[i][j] == '\n')
+			{
+				grid[i][j] = '\0';
+				break;
+			}
 			j++;
 		}
-		line = get_next_line(file);
-		if (j > (*map).width)
+        i++;
+    }
+}
+
+static int border_map_checker(t_map map)
+{
+	int i;
+
+	i = 0;
+	while (map.grid[0][i])
+	{
+		if (map.grid[0][i] != '1' || i > map.width)
 			return (0);
 		i++;
 	}
-	(*map).height = i;
+	i = 0;
+	while (map.grid[map.height - 1][i])
+	{
+		if (map.grid[map.height - 1][i] != '1' || i > map.width)
+			return (0);
+		i++;
+	}
+	i = 0;
+	while (map.height - 1 != i)
+	{
+		if (map.grid[i][0] != '1' || map.grid[i][map.width - 1] != '1')
+			return (0);
+		i++;
+	}
 	return (1);
 }
 
-void	parsing(t_map *map)
+static int	map_checker(t_data *data, char **grid)
 {
-	t_map	map;
-	int		fd;
-	int		i;
-    
-	fd = open("map.ber", O_RDONLY);
-	set_map_size(fd, map);
-	(*map).grid = malloc((*map).height * sizeof(char*));
-	(*map).grid[0] = get_next_line(fd);
+	int i;
+	int j;
+
 	i = 0;
-	while ((*map).height != i)
+	while (i < data->map.height)
 	{
-		(*map).grid[i] = malloc((*map).width * sizeof(char));
-		(*map).grid[i] = get_next_line(fd);
+		j = 0;
+		while (grid[i][j])
+		{
+			chars_checker(data, grid, i, j);
+			j++;
+		}
+		if (j != data->map.width)
+			return (0);
 		i++;
 	}
+	if (data->map.e_count != 1 || data->map.c_count < 1 || data->map.p_count != 1)
+		return (0);
+	return (1);
+}
+
+static void	set_map_size(t_data *data)
+{
+	char	*line;
+	int		file;
+	
+	file = open(data->filename, O_RDONLY);
+		if (file < 0)
+    		clean_exit(data);
+	line = get_next_line(file);
+	if (!line)
+		clean_exit(data);
+	data->map.width = ft_strlen(line) - 1;
+	while (line)
+	{
+		free(line);
+		data->map.height++;
+		line = get_next_line(file);
+	}
+	close(file);
+}
+
+void	parsing(t_data *data)
+{
+	int		fd;
+	int		i;
+
+	set_map_size(data);
+	fd = open(data->filename, O_RDONLY);
+	data->map.grid = malloc((data->map.height + 1) * sizeof(char*));
+	if (!data->map.grid)
+	{
+		mlx_clear_window(data->mlx_ptr, data->win_ptr);
+		close (fd);
+		exit (0);
+	}
+	data->map.grid[data->map.height] = NULL;
+	i = 0;
+	while (data->map.height != i)
+	{
+		data->map.grid[i] = get_next_line(fd);
+		i++;
+	}
+	close(fd);
+	sanitize_grid(data->map.grid);
+	if (!map_checker(data, data->map.grid) || !border_map_checker(data->map))
+		clean_exit(data);
 }
