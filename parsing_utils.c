@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: enzorolinux <enzorolinux@student.42.fr>    +#+  +:+       +#+        */
+/*   By: erocha-- <erocha--@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 18:00:51 by enzorolinux       #+#    #+#             */
-/*   Updated: 2026/01/15 20:10:06 by enzorolinux      ###   ########.fr       */
+/*   Updated: 2026/01/16 14:13:49 by erocha--         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,11 @@ void	chars_checker(t_data *data, char **grid, int i, int j)
 	else if (grid[i][j] == 'C')
 		data->map.c_count++;
 	else if (grid[i][j] == 'P')
+	{
+		data->map.p_x = i;
+		data->map.p_y = j;
 		data->map.p_count++;
+	}
 	else if (grid[i][j] != '0' && grid[i][j] != '1')
 		clean_exit(data);
 }

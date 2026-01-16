@@ -11,6 +11,7 @@ SRC         := 	so_long.c \
 				parsing.c \
 				parsing_utils.c \
 				utils.c \
+				valid_walls.c \
 				GNL/get_next_line.c \
 				GNL/get_next_line_utils.c
 
@@ -18,9 +19,12 @@ OBJ         := $(SRC:.c=.o)
 
 all: $(NAME)
 
-$(NAME): $(OBJ)
+$(NAME): $(LIBFT) $(OBJ)
 	@make -C $(MLX_DIR)
 	$(CC) -g $(OBJ) $(MLX_LNK) $(LIBFT) -o $(NAME)
+
+$(LIBFT):
+	$(MAKE) -C ./libft
 
 %.o: %.c
 	$(CC) $(FLAGS) $(MLX_INC) -c $< -o $@

@@ -3,29 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: enzorolinux <enzorolinux@student.42.fr>    +#+  +:+       +#+        */
+/*   By: erocha-- <erocha--@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/13 15:43:53 by erocha--          #+#    #+#             */
-/*   Updated: 2026/01/15 20:13:32 by enzorolinux      ###   ########.fr       */
+/*   Updated: 2026/01/16 15:20:09 by erocha--         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-static void sanitize_grid(char **grid)
+static void sanitize_grid(t_data *data)
 {
     int i;
 	int j;
 
 	i = 0;
-    while (grid[i])
+    while (i < data->map.height)
     {
 		j = 0;
-        while (grid[i][j])
+        while (data->map.grid[i][j])
         {
-			if (grid[i][j] == '\n')
+			if (data->map.grid[i][j] == '\n')
 			{
-				grid[i][j] = '\0';
+				data->map.grid[i][j] = '\0';
 				break;
 			}
 			j++;
@@ -110,25 +110,28 @@ void	parsing(t_data *data)
 {
 	int		fd;
 	int		i;
+	char	*temp;
 
 	set_map_size(data);
 	fd = open(data->filename, O_RDONLY);
-	data->map.grid = malloc((data->map.height + 1) * sizeof(char*));
+	data->map.grid = malloc((data->map.height) * sizeof(char*));
 	if (!data->map.grid)
 	{
 		mlx_clear_window(data->mlx_ptr, data->win_ptr);
 		close (fd);
 		exit (0);
 	}
-	data->map.grid[data->map.height] = NULL;
 	i = 0;
 	while (data->map.height != i)
 	{
 		data->map.grid[i] = get_next_line(fd);
 		i++;
 	}
+	temp = get_next_line(fd);
+	free(temp);
 	close(fd);
-	sanitize_grid(data->map.grid);
-	if (!map_checker(data, data->map.grid) || !border_map_checker(data->map))
+	sanitize_grid(data);
+	if (!map_checker(data, data->map.grid) || !border_map_checker(data->map)
+		|| !valid_walls(data))
 		clean_exit(data);
 }

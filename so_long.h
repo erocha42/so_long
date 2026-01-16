@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   so_long.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: enzorolinux <enzorolinux@student.42.fr>    +#+  +:+       +#+        */
+/*   By: erocha-- <erocha--@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/13 15:44:56 by erocha--          #+#    #+#             */
-/*   Updated: 2026/01/15 20:11:27 by enzorolinux      ###   ########.fr       */
+/*   Updated: 2026/01/16 15:36:49 by erocha--         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ typedef struct s_map
 	int		width;
 	int		height;
 	int		p_count;
+	int		p_x;
+	int		p_y;
 	int		e_count;
 	int		c_count;
 }			t_map;
@@ -30,11 +32,13 @@ typedef struct s_data
 {
 	void	*mlx_ptr;
 	void	*win_ptr;
+	void	*img_ptr;
 	char	*filename;
 	t_map	map;
 }			t_data;
 
 void	parsing(t_data *data);
-void	clean_exit(t_data *data);
+int		clean_exit(t_data *data);
 void	chars_checker(t_data *data, char **grid, int i, int j);
-int	filename_checker(char *filename);
+int		filename_checker(char *filename);
+int		valid_walls(t_data *data);
