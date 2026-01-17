@@ -1,6 +1,6 @@
 NAME        := so_long
 CC          := gcc
-FLAGS       := -Wall -Wextra -Werror
+FLAGS       := -Wall -Wextra -Werror -g
 LIBFT		= ./libft/libft.a
 
 MLX_DIR     := ./minilibx-linux
@@ -12,6 +12,7 @@ SRC         := 	so_long.c \
 				parsing_utils.c \
 				utils.c \
 				valid_walls.c \
+				render.c \
 				GNL/get_next_line.c \
 				GNL/get_next_line_utils.c
 
@@ -21,7 +22,7 @@ all: $(NAME)
 
 $(NAME): $(LIBFT) $(OBJ)
 	@make -C $(MLX_DIR)
-	$(CC) -g $(OBJ) $(MLX_LNK) $(LIBFT) -o $(NAME)
+	$(CC) $(FLAGS) $(OBJ) $(MLX_LNK) $(LIBFT) -o $(NAME)
 
 $(LIBFT):
 	$(MAKE) -C ./libft

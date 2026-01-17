@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: erocha-- <erocha--@student.42.fr>          +#+  +:+       +#+        */
+/*   By: enzorolinux <enzorolinux@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/13 15:43:53 by erocha--          #+#    #+#             */
-/*   Updated: 2026/01/16 15:20:09 by erocha--         ###   ########.fr       */
+/*   Updated: 2026/01/17 21:06:24 by enzorolinux      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static void sanitize_grid(t_data *data)
 		j = 0;
         while (data->map.grid[i][j])
         {
-			if (data->map.grid[i][j] == '\n')
+			if (!valid_char(data->map.grid[i][j]))
 			{
 				data->map.grid[i][j] = '\0';
 				break;
@@ -41,7 +41,7 @@ static int border_map_checker(t_map map)
 	i = 0;
 	while (map.grid[0][i])
 	{
-		if (map.grid[0][i] != '1' || i > map.width)
+		if (map.grid[0][i] != '1')
 			return (0);
 		i++;
 	}
@@ -62,7 +62,7 @@ static int border_map_checker(t_map map)
 	return (1);
 }
 
-static int	map_checker(t_data *data, char **grid)
+static int	map_checker(t_data *data)
 {
 	int i;
 	int j;
@@ -71,9 +71,9 @@ static int	map_checker(t_data *data, char **grid)
 	while (i < data->map.height)
 	{
 		j = 0;
-		while (grid[i][j])
+		while (data->map.grid[i][j])
 		{
-			chars_checker(data, grid, i, j);
+			chars_checker(data, data->map.grid, i, j);
 			j++;
 		}
 		if (j != data->map.width)
@@ -89,14 +89,18 @@ static void	set_map_size(t_data *data)
 {
 	char	*line;
 	int		file;
+	int		i;
 	
-	file = open(data->filename, O_RDONLY);
-		if (file < 0)
-    		clean_exit(data);
+	file = open(data->filepath, O_RDONLY);
+	if (file < 0)
+		clean_exit(data);
 	line = get_next_line(file);
 	if (!line)
 		clean_exit(data);
-	data->map.width = ft_strlen(line) - 1;
+	i = 0;
+	while (line[i] == '1')
+		i++;
+	data->map.width = i;
 	while (line)
 	{
 		free(line);
@@ -113,7 +117,7 @@ void	parsing(t_data *data)
 	char	*temp;
 
 	set_map_size(data);
-	fd = open(data->filename, O_RDONLY);
+	fd = open(data->filepath, O_RDONLY);
 	data->map.grid = malloc((data->map.height) * sizeof(char*));
 	if (!data->map.grid)
 	{
@@ -131,7 +135,7 @@ void	parsing(t_data *data)
 	free(temp);
 	close(fd);
 	sanitize_grid(data);
-	if (!map_checker(data, data->map.grid) || !border_map_checker(data->map)
+	if (!map_checker(data) || !border_map_checker(data->map)
 		|| !valid_walls(data))
 		clean_exit(data);
 }

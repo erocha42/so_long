@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   so_long.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: erocha-- <erocha--@student.42.fr>          +#+  +:+       +#+        */
+/*   By: enzorolinux <enzorolinux@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/13 09:09:00 by erocha--          #+#    #+#             */
-/*   Updated: 2026/01/16 15:30:31 by erocha--         ###   ########.fr       */
+/*   Updated: 2026/01/17 21:28:11 by enzorolinux      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,25 +30,37 @@ static void	data_init(t_data *data)
 	data->map.p_y = 0;
 	data->mlx_ptr = NULL;
 	data->win_ptr = NULL;
+	data->wall_img = NULL;
+	data->floor_img = NULL;
+	data->coin_img = NULL;
+	data->player_img = NULL;
+	data->exit_img = NULL;
 }
 
 int	main(int argc, char **argv)
 {
 	t_data	data;
+	int	img_h;
+	int	img_w;
 
-	data.filename = argv[1];
-	if (argc != 2 || !filename_checker(data.filename))
+	data.filepath = argv[1];
+	if (argc != 2 || !filepath_checker(data.filepath))
 		return (1);
 	data_init(&data);
 	parsing(&data);
 	data.mlx_ptr = mlx_init();
 	if (data.mlx_ptr == NULL)
 		return (1);
-	data.win_ptr = mlx_new_window(data.mlx_ptr, 800, 600, "So_long - Test Linux");
+	data.win_ptr = mlx_new_window(data.mlx_ptr, data.map.width * 32, data.map.height * 32, "So_long");
 	if (data.win_ptr == NULL)
 		return (1);
-	mlx_xpm_file_to_image(data.mlx_ptr, data.filename, &data.map.width, &data.map.height);
+    data.wall_img = mlx_xpm_file_to_image(data.mlx_ptr, "assets/sprites/wall.xpm", &img_w, &img_h);
+	data.floor_img = mlx_xpm_file_to_image(data.mlx_ptr, "assets/sprites/floor.xpm", &img_w, &img_h);
+	data.coin_img = mlx_xpm_file_to_image(data.mlx_ptr, "assets/sprites/coin-bag.xpm", &img_w, &img_h);
+	data.player_img = mlx_xpm_file_to_image(data.mlx_ptr, "assets/sprites/player/front.xpm", &img_w, &img_h);
+	data.exit_img = mlx_xpm_file_to_image(data.mlx_ptr, "assets/sprites/exit-closed.xpm", &img_w, &img_h);
 	mlx_hook(data.win_ptr, 17, 0, stop, &data);
+	mlx_hook(data.win_ptr, 12, (1L << 15), render, &data);
 	mlx_loop(data.mlx_ptr);
 	clean_exit(&data);
 }

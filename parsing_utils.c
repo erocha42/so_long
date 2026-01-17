@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: erocha-- <erocha--@student.42.fr>          +#+  +:+       +#+        */
+/*   By: enzorolinux <enzorolinux@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 18:00:51 by enzorolinux       #+#    #+#             */
-/*   Updated: 2026/01/16 14:13:49 by erocha--         ###   ########.fr       */
+/*   Updated: 2026/01/17 18:05:22 by enzorolinux      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,20 +20,20 @@ void	chars_checker(t_data *data, char **grid, int i, int j)
 		data->map.c_count++;
 	else if (grid[i][j] == 'P')
 	{
-		data->map.p_x = i;
-		data->map.p_y = j;
+		data->map.p_y = i;
+		data->map.p_x = j;
 		data->map.p_count++;
 	}
 	else if (grid[i][j] != '0' && grid[i][j] != '1')
 		clean_exit(data);
 }
 
-int	filename_checker(char *filename)
+int	filepath_checker(char *filepath)
 {
 	int	len;
 
-	len = ft_strlen(filename);
-	if (len < 4 || ft_strncmp(&filename[len - 4], ".ber", 4))
+	len = ft_strlen(filepath);
+	if (len < 4 || ft_strncmp(&filepath[len - 4], ".ber", 4))
 		return (0);
 	return (1);
 }

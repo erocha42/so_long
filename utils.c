@@ -3,14 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: erocha-- <erocha--@student.42.fr>          +#+  +:+       +#+        */
+/*   By: enzorolinux <enzorolinux@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/14 17:17:03 by enzorolinux       #+#    #+#             */
-/*   Updated: 2026/01/16 14:05:53 by erocha--         ###   ########.fr       */
+/*   Updated: 2026/01/17 21:04:56 by enzorolinux      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
+
+int	valid_char(char c)
+{
+	if (c == '1' || c == '0' || c == 'P' || c == 'C' || c == 'E')
+		return (1);
+	return (0);
+}
 
 int	clean_exit(t_data *data)
 {

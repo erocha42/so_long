@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   valid_walls.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: erocha-- <erocha--@student.42.fr>          +#+  +:+       +#+        */
+/*   By: enzorolinux <enzorolinux@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/16 11:15:37 by erocha--          #+#    #+#             */
-/*   Updated: 2026/01/16 15:21:48 by erocha--         ###   ########.fr       */
+/*   Updated: 2026/01/17 18:15:22 by enzorolinux      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,27 +34,27 @@ static char	**map_cpy(t_data *data)
 	return (gridcpy);
 }
 
-static void	flood_fill(char **grid, int x, int y)
+static void	flood_fill(char **grid, int y, int x)
 {
-	if (grid[x-1][y] != '1' && grid[x-1][y] != 'X' && grid[x-1][y] != 'P')
+	if (grid[y-1][x] != '1' && grid[y-1][x] != 'X' && grid[y-1][x] != 'P')
 	{
-		grid[x-1][y] = 'X';
-		flood_fill(grid, x-1, y);
+		grid[y-1][x] = 'X';
+		flood_fill(grid, y-1, x);
 	}
-	if (grid[x][y+1] != '1' && grid[x][y+1] != 'X' && grid[x][y+1] != 'P')
+	if (grid[y][x+1] != '1' && grid[y][x+1] != 'X' && grid[y][x+1] != 'P')
 	{
-		grid[x][y+1] = 'X';
-		flood_fill(grid, x, y+1);
+		grid[y][x+1] = 'X';
+		flood_fill(grid, y, x+1);
 	}
-	if (grid[x+1][y] != '1' && grid[x+1][y] != 'X' && grid[x+1][y] != 'P')
+	if (grid[y+1][x] != '1' && grid[y+1][x] != 'X' && grid[y+1][x] != 'P')
 	{
-		grid[x+1][y] = 'X';
-		flood_fill(grid, x+1, y);
+		grid[y+1][x] = 'X';
+		flood_fill(grid, y+1, x);
 	}
-	if (grid[x][y-1] != '1' && grid[x][y-1] != 'X' && grid[x][y-1] != 'P')
+	if (grid[y][x-1] != '1' && grid[y][x-1] != 'X' && grid[y][x-1] != 'P')
 	{
-		grid[x][y-1] = 'X';
-		flood_fill(grid, x, y-1);
+		grid[y][x-1] = 'X';
+		flood_fill(grid, y, x-1);
 	}
 	return ;
 }
