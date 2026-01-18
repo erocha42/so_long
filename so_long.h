@@ -6,7 +6,7 @@
 /*   By: enzorolinux <enzorolinux@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/13 15:44:56 by erocha--          #+#    #+#             */
-/*   Updated: 2026/01/17 21:16:25 by enzorolinux      ###   ########.fr       */
+/*   Updated: 2026/01/18 15:18:32 by enzorolinux      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,3 +48,4 @@ int		filepath_checker(char *filepath);
 int		valid_walls(t_data *data);
 int     render(t_data *data);
 int     valid_char(char c);
+void	events_handling(t_data *data);

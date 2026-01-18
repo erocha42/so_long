@@ -6,17 +6,11 @@
 /*   By: enzorolinux <enzorolinux@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/13 09:09:00 by erocha--          #+#    #+#             */
-/*   Updated: 2026/01/17 21:28:11 by enzorolinux      ###   ########.fr       */
+/*   Updated: 2026/01/18 15:27:38 by enzorolinux      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
-
-static int stop()
-{
-	exit (0);
-	return (1);
-}
 
 static void	data_init(t_data *data)
 {
@@ -59,8 +53,7 @@ int	main(int argc, char **argv)
 	data.coin_img = mlx_xpm_file_to_image(data.mlx_ptr, "assets/sprites/coin-bag.xpm", &img_w, &img_h);
 	data.player_img = mlx_xpm_file_to_image(data.mlx_ptr, "assets/sprites/player/front.xpm", &img_w, &img_h);
 	data.exit_img = mlx_xpm_file_to_image(data.mlx_ptr, "assets/sprites/exit-closed.xpm", &img_w, &img_h);
-	mlx_hook(data.win_ptr, 17, 0, stop, &data);
-	mlx_hook(data.win_ptr, 12, (1L << 15), render, &data);
+	events_handling(&data);
 	mlx_loop(data.mlx_ptr);
 	clean_exit(&data);
 }

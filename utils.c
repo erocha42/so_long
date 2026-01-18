@@ -6,7 +6,7 @@
 /*   By: enzorolinux <enzorolinux@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/14 17:17:03 by enzorolinux       #+#    #+#             */
-/*   Updated: 2026/01/17 21:04:56 by enzorolinux      ###   ########.fr       */
+/*   Updated: 2026/01/18 16:53:07 by enzorolinux      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,10 @@ int	clean_exit(t_data *data)
 	int	i;
 	
 	if (data->win_ptr)
+	{
 		mlx_clear_window(data->mlx_ptr, data->win_ptr);
+		free(data->win_ptr);
+    }
 	if (data->mlx_ptr)
 	{
 		mlx_destroy_display(data->mlx_ptr);

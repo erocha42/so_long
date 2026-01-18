@@ -6,7 +6,7 @@
 /*   By: enzorolinux <enzorolinux@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/16 11:15:37 by erocha--          #+#    #+#             */
-/*   Updated: 2026/01/17 18:15:22 by enzorolinux      ###   ########.fr       */
+/*   Updated: 2026/01/18 14:50:56 by enzorolinux      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ int	valid_walls(t_data *data)
 	grid = map_cpy(data);
 	if (!grid)
 		clean_exit(data);
-	flood_fill(grid, data->map.p_x, data->map.p_y);
+	flood_fill(grid, data->map.p_y, data->map.p_x);
 	i = 0;
 	while (i < data->map.height)
 	{

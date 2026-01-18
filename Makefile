@@ -13,6 +13,7 @@ SRC         := 	so_long.c \
 				utils.c \
 				valid_walls.c \
 				render.c \
+				events_handling.c \
 				GNL/get_next_line.c \
 				GNL/get_next_line_utils.c
 
