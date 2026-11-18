@@ -2,6 +2,7 @@ NAME        := so_long
 CC          := gcc
 FLAGS       := -Wall -Wextra -Werror -g
 LIBFT		= ./libft/libft.a
+FT_PRINTF   = ./ft_printf/libftprintf.a
 
 MLX_DIR     := ./minilibx-linux
 MLX_LNK     := -L$(MLX_DIR) -lmlx -lXext -lX11 -lm -lbsd
@@ -21,21 +22,28 @@ OBJ         := $(SRC:.c=.o)
 
 all: $(NAME)
 
-$(NAME): $(LIBFT) $(OBJ)
+$(NAME): $(FT_PRINTF) $(LIBFT) $(OBJ)
 	@make -C $(MLX_DIR)
-	$(CC) $(FLAGS) $(OBJ) $(MLX_LNK) $(LIBFT) -o $(NAME)
+	$(CC) $(FLAGS) $(OBJ) $(MLX_LNK) $(FT_PRINTF) $(LIBFT) -o $(NAME)
 
 $(LIBFT):
 	$(MAKE) -C ./libft
+
+$(FT_PRINTF):
+	$(MAKE) -C ./ft_printf
 
 %.o: %.c
 	$(CC) $(FLAGS) $(MLX_INC) -c $< -o $@
 
 clean:
+	$(MAKE) clean -C ./ft_printf
+	$(MAKE) clean -C ./libft
 	rm -f $(OBJ)
 	@make -C $(MLX_DIR) clean
 
 fclean: clean
+	$(MAKE) fclean -C ./ft_printf
+	$(MAKE) fclean -C ./libft
 	rm -f $(NAME)
 
 re: fclean all

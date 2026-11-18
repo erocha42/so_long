@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: enzorolinux <enzorolinux@student.42.fr>    +#+  +:+       +#+        */
+/*   By: erocha-- <erocha--@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 18:00:51 by enzorolinux       #+#    #+#             */
-/*   Updated: 2026/01/17 18:05:22 by enzorolinux      ###   ########.fr       */
+/*   Updated: 2026/01/21 13:07:00 by erocha--         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	chars_checker(t_data *data, char **grid, int i, int j)
 		data->map.p_count++;
 	}
 	else if (grid[i][j] != '0' && grid[i][j] != '1')
-		clean_exit(data);
+		clean_exit(data, 1);
 }
 
 int	filepath_checker(char *filepath)

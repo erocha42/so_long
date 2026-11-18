@@ -3,18 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   so_long.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: enzorolinux <enzorolinux@student.42.fr>    +#+  +:+       +#+        */
+/*   By: erocha-- <erocha--@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/13 15:44:56 by erocha--          #+#    #+#             */
-/*   Updated: 2026/01/18 15:18:32 by enzorolinux      ###   ########.fr       */
+/*   Updated: 2026/01/23 12:58:21 by erocha--         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minilibx-linux/mlx.h"
+#include "ft_printf/ft_printf.h"
 #include "stdlib.h"
 #include "fcntl.h"
 #include "GNL/get_next_line.h"
 #include "libft/libft.h"
+
+#define ESC 65307
 
 typedef struct s_map
 {
@@ -38,14 +41,15 @@ typedef struct s_data
 	void	*player_img;
 	void	*exit_img;
 	char	*filepath;
+	int		move_counter;
 	t_map	map;
 }			t_data;
 
 void	parsing(t_data *data);
-int		clean_exit(t_data *data);
+int		clean_exit(t_data *data, int error_code);
 void	chars_checker(t_data *data, char **grid, int i, int j);
 int		filepath_checker(char *filepath);
-int		valid_walls(t_data *data);
-int     render(t_data *data);
-int     valid_char(char c);
+void	valid_walls(t_data *data);
+int		render(t_data *data);
+int		valid_char(char c);
 void	events_handling(t_data *data);

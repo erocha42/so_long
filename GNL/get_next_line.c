@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: enzorolinux <enzorolinux@student.42.fr>    +#+  +:+       +#+        */
+/*   By: erocha-- <erocha--@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/07 11:41:54 by erocha--          #+#    #+#             */
-/*   Updated: 2026/01/14 16:53:17 by enzorolinux      ###   ########.fr       */
+/*   Updated: 2026/01/22 12:06:32 by erocha--         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@ static void	clean_stash(t_gnl_list **stash)
 {
 	t_gnl_list	*last;
 	t_gnl_list	*cleaned;
-	int		i;
-	int		j;
+	int			i;
+	int			j;
 
 	cleaned = malloc(sizeof(t_gnl_list));
 	if (cleaned == NULL)
@@ -73,7 +73,7 @@ static void	put_to_stash(t_gnl_list **stash, char *buf, int readed_value)
 {
 	t_gnl_list	*new_node;
 	t_gnl_list	*last;
-	int		i;
+	int			i;
 
 	new_node = malloc(sizeof(t_gnl_list));
 	if (new_node == NULL)
@@ -129,7 +129,7 @@ static int	read_stash(int fd, t_gnl_list **stash)
 char	*get_next_line(int fd)
 {
 	static t_gnl_list	*stash;
-	char			*line;
+	char				*line;
 
 	if (BUFFER_SIZE <= 0 || fd < 0)
 		return (NULL);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: enzorolinux <enzorolinux@student.42.fr>    +#+  +:+       +#+        */
+/*   By: erocha-- <erocha--@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/07 17:06:32 by erocha--          #+#    #+#             */
-/*   Updated: 2026/01/14 19:14:08 by enzorolinux      ###   ########.fr       */
+/*   Updated: 2026/01/22 12:06:47 by erocha--         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	new_line(t_gnl_list *stash)
 {
 	t_gnl_list	*last;
-	int		i;
+	int			i;
 
 	i = 0;
 	if (stash == NULL)

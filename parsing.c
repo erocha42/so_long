@@ -3,40 +3,40 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: enzorolinux <enzorolinux@student.42.fr>    +#+  +:+       +#+        */
+/*   By: erocha-- <erocha--@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/13 15:43:53 by erocha--          #+#    #+#             */
-/*   Updated: 2026/01/17 21:06:24 by enzorolinux      ###   ########.fr       */
+/*   Updated: 2026/01/23 12:27:16 by erocha--         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-static void sanitize_grid(t_data *data)
+static void	sanitize_grid(t_data *data)
 {
-    int i;
-	int j;
+	int	i;
+	int	j;
 
 	i = 0;
-    while (i < data->map.height)
-    {
+	while (i < data->map.height)
+	{
 		j = 0;
-        while (data->map.grid[i][j])
-        {
+		while (data->map.grid[i][j])
+		{
 			if (!valid_char(data->map.grid[i][j]))
 			{
 				data->map.grid[i][j] = '\0';
-				break;
+				break ;
 			}
 			j++;
 		}
-        i++;
-    }
+		i++;
+	}
 }
 
-static int border_map_checker(t_map map)
+static int	border_map_checker(t_map map)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (map.grid[0][i])
@@ -64,8 +64,8 @@ static int border_map_checker(t_map map)
 
 static int	map_checker(t_data *data)
 {
-	int i;
-	int j;
+	int	i;
+	int	j;
 
 	i = 0;
 	while (i < data->map.height)
@@ -80,7 +80,8 @@ static int	map_checker(t_data *data)
 			return (0);
 		i++;
 	}
-	if (data->map.e_count != 1 || data->map.c_count < 1 || data->map.p_count != 1)
+	if (data->map.e_count != 1 || data->map.c_count < 1
+		|| data->map.p_count != 1)
 		return (0);
 	return (1);
 }
@@ -90,13 +91,13 @@ static void	set_map_size(t_data *data)
 	char	*line;
 	int		file;
 	int		i;
-	
+
 	file = open(data->filepath, O_RDONLY);
 	if (file < 0)
-		clean_exit(data);
+		clean_exit(data, 3);
 	line = get_next_line(file);
 	if (!line)
-		clean_exit(data);
+		clean_exit(data, 3);
 	i = 0;
 	while (line[i] == '1')
 		i++;
@@ -107,6 +108,7 @@ static void	set_map_size(t_data *data)
 		data->map.height++;
 		line = get_next_line(file);
 	}
+	free(line);
 	close(file);
 }
 
@@ -118,12 +120,11 @@ void	parsing(t_data *data)
 
 	set_map_size(data);
 	fd = open(data->filepath, O_RDONLY);
-	data->map.grid = malloc((data->map.height) * sizeof(char*));
-	if (!data->map.grid)
+	data->map.grid = malloc((data->map.height) * sizeof(char *));
+	if (!data->map.grid || fd < 0)
 	{
-		mlx_clear_window(data->mlx_ptr, data->win_ptr);
-		close (fd);
-		exit (0);
+		clean_exit(data, 3);
+		close(fd);
 	}
 	i = 0;
 	while (data->map.height != i)
@@ -135,7 +136,6 @@ void	parsing(t_data *data)
 	free(temp);
 	close(fd);
 	sanitize_grid(data);
-	if (!map_checker(data) || !border_map_checker(data->map)
-		|| !valid_walls(data))
-		clean_exit(data);
+	if (!map_checker(data) || !border_map_checker(data->map))
+		clean_exit(data, 1);
 }
